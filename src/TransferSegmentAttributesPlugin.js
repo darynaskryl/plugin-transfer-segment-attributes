@@ -21,9 +21,6 @@ export default class TransferSegmentAttributesPlugin extends FlexPlugin {
     flex.Actions.addListener('afterTransferTask', async (payload) => {
       console.log('***My afterTransferTaskcallback***', payload);
       const { task } = payload;
-      const { source } = task;
-      const { transfers } = source;
-      const outgoingTransfer = transfers && transfers.outgoing;
       const holdTransferStartDate = new Date();
       const holdTransferStartTime = holdTransferStartDate.getTime();
       console.log('***Hold during Warm Transfer started at: ***', holdTransferStartTime);
@@ -81,7 +78,10 @@ export default class TransferSegmentAttributesPlugin extends FlexPlugin {
       const { task } = payload;
       const { source } = task;
       const { transfers } = source;
-      const isTransfer = transfers && (transfers.incoming || transfers.outgoing);
+      console.log ('*** transfers object: ***' + transfers);
+
+      const isTransfer = transfers && (transfers.outgoing || transfers.incoming);
+
       const { attributes } = task;
       const { conversations } = attributes;
 
